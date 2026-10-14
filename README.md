@@ -1,39 +1,39 @@
-# 🎀 Halls of Desire — Руководство по созданию модов (Modding Guide)
+# 🎀 Halls of Desire — Modding Guide
 
-Добро пожаловать в официальное руководство по созданию пользовательских модификаций для игры **Halls of Desire**!
+Welcome to the official guide to creating custom modifications for **Halls of Desire**!
 
-Игра поддерживает модульную систему контента: вы можете легко добавлять новые фотографии, арты и анимации, интегрировать их в систему наблюдения за камерами, галерею наград и телефонные заказы.
+The game supports a modular content system: you can easily add new photos, artwork and animations, and integrate them into the camera surveillance system, the rewards gallery and phone orders.
 
 ---
 
-## 📁 Структура папки мода
+## 📁 Mod Folder Structure
 
-Каждый мод представляет собой отдельную папку, расположенную в директории `Mods/`:
+Each mod is a separate folder located in the `Mods/` directory:
 
-* **На ПК (Windows):** `<Папка с игрой>/Mods/<ИмяМода>/`
-* **На Android:** Внутренняя папка приложения `user://Mods/<ИмяМода>/` (устанавливается прямо из меню игры через кнопку выбора `.zip` файла).
+* **On PC (Windows):** `<Game folder>/Mods/<ModName>/`
+* **On Android:** The app's internal folder `user://Mods/<ModName>/` (installed directly from the game menu via the `.zip` file picker button).
 
-### Обязательные файлы и папки:
+### Required files and folders:
 
 ```text
 ExampleMod/
-├── Images/                  # Папка с изображениями (фото/арты)
+├── Images/                  # Folder with images (photos/artwork)
 │   └── mod_image.jpg
-├── Animations/              # (Опционально) Папка с видео/анимациями (.ogv)
+├── Animations/              # (Optional) Folder with videos/animations (.ogv)
 │   └── scene.ogv
-├── info.json                # Метаданные мода (название, автор, иконка)
-├── content.json             # База данных контента, тегов, редкости и цен
-└── icon.jpg                 # Иконка мода (отображается в Mod Manager игры)
+├── info.json                # Mod metadata (name, author, icon)
+├── content.json             # Database of content, tags, rarity and prices
+└── icon.jpg                 # Mod icon (shown in the game's Mod Manager)
 ```
 
 > [!TIP]
-> Игру можно распространять как готовую папку, так и в виде обычного `.zip` архива. На ПК игра автоматически распакует положенный в `Mods/` zip-архив при запуске или нажатии кнопки «Обновить» в меню модов!
+> Mods can be distributed either as a ready-made folder or as a regular `.zip` archive. On PC, the game automatically extracts any zip archive placed in `Mods/` on startup or when you press the "Refresh" button in the mods menu!
 
 ---
 
-## ⚙️ 1. Конфигурация `info.json`
+## ⚙️ 1. Configuring `info.json`
 
-Файл содержит информацию, которая отображается в меню менеджера модов.
+This file contains the information displayed in the Mod Manager menu.
 
 ```json
 {
@@ -43,15 +43,15 @@ ExampleMod/
 }
 ```
 
-* **`Name`** *(string)* — Название вашего мода.
-* **`Author`** *(string)* — Никнейм автора или команды.
-* **`IconPath`** *(string)* — Относительный путь к обложке мода (поддерживаются `.jpg`, `.png`, `.webp`).
+* **`Name`** *(string)* — The name of your mod.
+* **`Author`** *(string)* — The nickname of the author or team.
+* **`IconPath`** *(string)* — Relative path to the mod's cover image (`.jpg`, `.png` and `.webp` are supported).
 
 ---
 
-## 🖼️ 2. Конфигурация `content.json`
+## 🖼️ 2. Configuring `content.json`
 
-Файл представляет собой JSON-массив (`[...]`) объектов контента:
+This file is a JSON array (`[...]`) of content objects:
 
 ```json
 [
@@ -82,171 +82,171 @@ ExampleMod/
 ]
 ```
 
-### Параметры каждого элемента:
+### Parameters of each item:
 
-| Поле | Тип | Описание |
+| Field | Type | Description |
 | :--- | :--- | :--- |
-| **`Path`** | *string* | Относительный путь к файлу. Если путь начинается с `Animations/` или имеет расширение `.ogv`, игра определяет его как **анимацию**. Все остальные файлы определяются как **фото** (`Picture`). |
-| **`Price`** | *integer* | Базовая цена продажи предмета в Галерее в долларах `$` (по умолчанию `10`). |
-| **`Rarity`** | *string* | Редкость предмета: `Common`, `Rare`, `Epic`, `Legendary`. |
-| **`Tags`** | *string[]* | Список ключевых тегов, определяющих, где, когда и при каких условиях контент может быть получен. |
+| **`Path`** | *string* | Relative path to the file. If the path starts with `Animations/` or has the `.ogv` extension, the game treats it as an **animation**. All other files are treated as **photos** (`Picture`). |
+| **`Price`** | *integer* | Base selling price of the item in the Gallery, in dollars `$` (default `10`). |
+| **`Rarity`** | *string* | Item rarity: `Common`, `Rare`, `Epic`, `Legendary`. |
+| **`Tags`** | *string[]* | List of key tags that determine where, when and under what conditions the content can be obtained. |
 
 ---
 
-## 💎 Редкость контента (`Rarity`)
+## 💎 Content Rarity (`Rarity`)
 
-Редкость влияет на цвет рамки в Галерее и шанс выпадения при клике на маркер активности на камерах:
+Rarity affects the frame color in the Gallery and the drop chance when clicking an activity marker on the cameras:
 
-| Редкость (`Rarity`) | Цвет в UI | Вес шанса выпадения | Рекомендуемая цена продажи (`Price`) |
+| Rarity (`Rarity`) | UI Color | Drop Weight | Recommended Selling Price (`Price`) |
 | :--- | :--- | :---: | :---: |
-| **`Common`** | Серый | **100** | 10 – 50 $ |
-| **`Rare`** | Синий | **30** | 60 – 120 $ |
-| **`Epic`** | Фиолетовый | **15** | 150 – 300 $ |
-| **`Legendary`** | Золотой | **5** | 350 – 1000 $ |
+| **`Common`** | Gray | **100** | $10 – 50 |
+| **`Rare`** | Blue | **30** | $60 – 120 |
+| **`Epic`** | Purple | **15** | $150 – 300 |
+| **`Legendary`** | Gold | **5** | $350 – 1000 |
 
 > [!NOTE]
-> Если при успешном прохождении мини-игры в пуле подходящих наград есть анимации (`Animations`), игра с вероятностью **10%** попробует выдать видео вместо фото.
+> If the pool of eligible rewards contains animations (`Animations`) after a mini-game is successfully completed, the game has a **10%** chance of trying to give a video instead of a photo.
 
 ---
 
-## 🏷️ Полный справочник тегов (`Tags`)
+## 🏷️ Complete Tag Reference (`Tags`)
 
-Теги — ключевая часть мода. Система генерации наград отбирает только те кадры, которые **содержат ВСЕ теги маркера**, на который нажал игрок (`requiredTags.All(...)`).
+Tags are the key part of a mod. The reward generation system only selects frames that **contain ALL the tags of the marker** the player clicked (`requiredTags.All(...)`).
 
-Кроме того, теги внешности и откровенности используются для генерации **заказов по телефону** (`PhoneOrderManager`).
+In addition, appearance and explicitness tags are used to generate **phone orders** (`PhoneOrderManager`).
 
 ---
 
-### 1. Теги комнат / камер (Locations)
+### 1. Room / Camera Tags (Locations)
 
-Разделяются по доступности в версиях игры:
+Split by availability across game versions:
 
-| Тег | Локация | Доступность в версиях | Описание |
+| Tag | Location | Version Availability | Description |
 | :--- | :--- | :---: | :--- |
-| **`studio`** | Студия / Спальня | 🟢 **Бесплатная (Demo) и Платная** | Основная комната девушки (день и ночь). |
-| **`bathroom`** | Ванная комната | 🟢 **Бесплатная (Demo) и Платная** | Душ, туалет, зеркало с раковиной. |
-| **`swimming_pool`**| Бассейн | 🔒 **ТОЛЬКО ПЛАТНАЯ (Full / Patreon)** | Зона отдыха и открытый бассейн. |
-| **`laundry_room`** | Прачечная | 🔒 **ТОЛЬКО ПЛАТНАЯ (Full / Patreon)** | Стиральные машины и столики. |
-| **`basement`** | Подвал | 🔒 **ТОЛЬКО ПЛАТНАЯ (Full / Patreon)** | Скрытая спальня в подвальном помещении. |
+| **`studio`** | Studio / Bedroom | 🟢 **Free (Demo) and Paid** | The girl's main room (day and night). |
+| **`bathroom`** | Bathroom | 🟢 **Free (Demo) and Paid** | Shower, toilet, mirror with sink. |
+| **`swimming_pool`**| Pool | 🔒 **PAID ONLY (Full / Patreon)** | Lounge area and outdoor pool. |
+| **`laundry_room`** | Laundry Room | 🔒 **PAID ONLY (Full / Patreon)** | Washing machines and tables. |
+| **`basement`** | Basement | 🔒 **PAID ONLY (Full / Patreon)** | A hidden bedroom in the basement. |
 
 > [!IMPORTANT]
-> В бесплатной Demo-версии кнопки переключения на Бассейн, Прачечную и Подвал заблокированы (при клике открывается ссылка на Patreon). Если вы создаете контент для этих трех локаций, он будет доступен **только обладателям полной платной версии**.
+> In the free Demo version, the buttons for switching to the Pool, Laundry Room and Basement are locked (clicking them opens a Patreon link). If you create content for these three locations, it will be available **only to owners of the full paid version**.
 
 ---
 
-### 2. Теги времени суток (Time of Day)
+### 2. Time of Day Tags
 
-* **`day`** — Дневное время (используется для дневных маркеров в студии).
-* **`night`** — Ночное время (используется для ночных маркеров в студии).
+* **`day`** — Daytime (used for daytime markers in the studio).
+* **`night`** — Nighttime (used for nighttime markers in the studio).
 
 ---
 
-### 3. Обязательные комбинации тегов для маркеров камер
+### 3. Required Tag Combinations for Camera Markers
 
-Чтобы ваше изображение могло выпасть в качестве награды при наблюдении за монитором, оно должно содержать **полный набор тегов**, соответствующий маркеру:
+For your image to drop as a reward while watching the monitor, it must contain the **full set of tags** matching the marker:
 
-#### 🟢 Бесплатная и Платная версии (Студия и Ванная):
+#### 🟢 Free and Paid versions (Studio and Bathroom):
 
-| Камера / Действие девушки | Необходимые теги в `Tags` | Описание сцены |
+| Camera / Girl's Action | Required Tags in `Tags` | Scene Description |
 | :--- | :--- | :--- |
-| **Студия (День) — Сон** | `studio`, `day`, `sleep` | Девушка спит днем на диване/кровати. |
-| **Студия (День) — Спорт** | `studio`, `day`, `sport` | Разминка, йога, фитнес в студии. |
-| **Студия (День) — Мастурбация** | `studio`, `day`, `masturbation` | Интимное самоудовлетворение днем. |
-| **Студия (Ночь) — Переодевание**| `studio`, `night`, `changing_clothes` | Смена одежды перед сном. |
-| **Студия (Ночь) — Мастурбация**| `studio`, `night`, `masturbation` | Ночная мастурбация в спальне. |
-| **Студия (Ночь) — Сон** | `studio`, `night`, `sleep` | Ночной сон в кровати. |
-| **Ванная — Чистка зубов** | `bathroom`, `brushes_his_teeth` | Утренний/вечерний уход за зубами. |
-| **Ванная — Туалет** | `bathroom`, `pees` | Поход в туалет. |
-| **Ванная — Душ / Мытье** | `bathroom`, `washable` | Водные процедуры в душе или ванной. |
-| **Ванная — Полотенце** | `bathroom`, `is_wiped` | Вытирается полотенцем после душа. |
+| **Studio (Day) — Sleep** | `studio`, `day`, `sleep` | The girl naps during the day on the couch/bed. |
+| **Studio (Day) — Sport** | `studio`, `day`, `sport` | Warm-up, yoga, fitness in the studio. |
+| **Studio (Day) — Masturbation** | `studio`, `day`, `masturbation` | Intimate self-pleasure during the day. |
+| **Studio (Night) — Changing Clothes**| `studio`, `night`, `changing_clothes` | Changing clothes before bed. |
+| **Studio (Night) — Masturbation**| `studio`, `night`, `masturbation` | Nighttime masturbation in the bedroom. |
+| **Studio (Night) — Sleep** | `studio`, `night`, `sleep` | Sleeping in bed at night. |
+| **Bathroom — Brushing Teeth** | `bathroom`, `brushes_his_teeth` | Morning/evening tooth brushing. |
+| **Bathroom — Toilet** | `bathroom`, `pees` | Using the toilet. |
+| **Bathroom — Shower / Washing** | `bathroom`, `washable` | Washing up in the shower or bath. |
+| **Bathroom — Towel** | `bathroom`, `is_wiped` | Drying off with a towel after a shower. |
 
 ---
 
-#### 🔒 Только Платная версия (Бассейн, Прачечная, Подвал):
+#### 🔒 Paid version only (Pool, Laundry Room, Basement):
 
-| Камера / Действие | Необходимые теги в `Tags` | Описание сцены |
+| Camera / Action | Required Tags in `Tags` | Scene Description |
 | :--- | :--- | :--- |
-| **Бассейн — Поцелуи** | `swimming_pool`, `kissing_a_girl_in_or_by_the_pool` | Романтические поцелуи двух девушек у воды. |
-| **Бассейн — Мастурбация** | `swimming_pool`, `girls_masturbating_in_or_near_the_pool` | Девушка мастурбирует на шезлонге или в воде. |
-| **Бассейн — Групповое** | `swimming_pool`, `orgy_with_girls_in_or_by_the_pool` | Групповое развлечение девушек в бассейне. |
-| **Бассейн — Секс (бонус)** | `swimming_pool`, `sex_with_a_girl_in_or_by_the_pool` | Секс у кромки бассейна. |
-| **Прачечная — Застряла** | `laundry_room`, `got_stuck_in_the_washing_machine` | Девушка застряла в стиральной машине. |
-| **Прачечная — Поцелуи** | `laundry_room`, `kissing_a_boy_in_the_laundry_room` | Поцелуи с парнем в прачечной. |
-| **Прачечная — На столе** | `laundry_room`, `masturbating_on_the_table_in_the_laundry_room` | Мастурбация на столе для белья. |
-| **Подвал — Поцелуи** | `basement`, `kissing_a_boy_in_the_basement` | Романтические объятия и поцелуи в подвале. |
-| **Подвал — Секс в постели** | `basement`, `fucking_a_guy_in_the_basement` | Половой акт на кровати в подвале. |
+| **Pool — Kissing** | `swimming_pool`, `kissing_a_girl_in_or_by_the_pool` | Romantic kissing between two girls by the water. |
+| **Pool — Masturbation** | `swimming_pool`, `girls_masturbating_in_or_near_the_pool` | A girl masturbating on a lounger or in the water. |
+| **Pool — Group** | `swimming_pool`, `orgy_with_girls_in_or_by_the_pool` | Group fun with girls in the pool. |
+| **Pool — Sex (bonus)** | `swimming_pool`, `sex_with_a_girl_in_or_by_the_pool` | Sex at the edge of the pool. |
+| **Laundry Room — Stuck** | `laundry_room`, `got_stuck_in_the_washing_machine` | A girl got stuck in the washing machine. |
+| **Laundry Room — Kissing** | `laundry_room`, `kissing_a_boy_in_the_laundry_room` | Kissing a guy in the laundry room. |
+| **Laundry Room — On the Table** | `laundry_room`, `masturbating_on_the_table_in_the_laundry_room` | Masturbating on the laundry table. |
+| **Basement — Kissing** | `basement`, `kissing_a_boy_in_the_basement` | Romantic hugs and kisses in the basement. |
+| **Basement — Sex in Bed** | `basement`, `fucking_a_guy_in_the_basement` | Intercourse on the bed in the basement. |
 
 ---
 
-### 4. Рейтинг откровенности (Content Rating)
+### 4. Content Rating
 
-Рекомендуется указывать для каждого кадра один из рейтингов:
+It is recommended to give each frame one of the following ratings:
 
-* **`sfw`** — Безопасный/приличный контент (девушка полностью одета, рутинные дела, чистка зубов, сон).
-* **`lite`** — Легкая эротика (нижнее белье, купальник, пикантный ракурс, полотенце).
-* **`nsfw`** — Откровенный контент 18+ (обнаженная грудь/гениталии, половой акт, явная мастурбация).
+* **`sfw`** — Safe/decent content (the girl is fully clothed, everyday activities, brushing teeth, sleeping).
+* **`lite`** — Light erotica (underwear, swimsuit, suggestive angle, towel).
+* **`nsfw`** — Explicit 18+ content (bare breasts/genitals, intercourse, explicit masturbation).
 
 > [!TIP]
-> Тег `nsfw` часто запрашивается заказчиками по телефону. Если вы хотите, чтобы ваши кадры можно было продавать по заказам, обязательно проставляйте `nsfw` откровенным работам!
+> The `nsfw` tag is frequently requested by phone clients. If you want your frames to be sellable through orders, be sure to tag explicit works with `nsfw`!
 
 ---
 
-### 5. Внешность персонажей (для телефонных заказов)
+### 5. Character Appearance (for phone orders)
 
-Система заказов по телефону случайным образом генерирует задачи для игрока. Чтобы ваши фото подходили под эти заказы, добавляйте теги внешности:
+The phone order system randomly generates tasks for the player. To make your photos match these orders, add appearance tags:
 
-#### Цвет волос (Hair Color):
-* `blonde` или `light_hair` — Блондинка / светлые волосы
-* `brunette` или `dark_hair` — Брюнетка / темные волосы
-* `redhead` — Рыжие волосы
-* `pink_hair` — Розовые волосы
-* `blue_hair` — Синие / голубые волосы
-* `purple_hair` — Фиолетовые волосы
-* `green_hair` — Зеленые волосы
+#### Hair Color:
+* `blonde` or `light_hair` — Blonde / light hair
+* `brunette` or `dark_hair` — Brunette / dark hair
+* `redhead` — Red hair
+* `pink_hair` — Pink hair
+* `blue_hair` — Blue / light blue hair
+* `purple_hair` — Purple hair
+* `green_hair` — Green hair
 
-#### Цвет глаз (Eye Color):
-* `blue_eyes` — Голубые / синие глаза
-* `brown_eyes` — Карие глаза
-* `green_eyes` — Зеленые глаза
-* `purple_eyes` — Фиолетовые глаза
-* `pink_eyes` — Розовые глаза
-* `closed_eyes` — Закрытые глаза (во время сна/оргазма)
+#### Eye Color:
+* `blue_eyes` — Blue eyes
+* `brown_eyes` — Brown eyes
+* `green_eyes` — Green eyes
+* `purple_eyes` — Purple eyes
+* `pink_eyes` — Pink eyes
+* `closed_eyes` — Closed eyes (while sleeping/during orgasm)
 
-#### Типаж (Ethnicity):
-* `asian` — Азиатская внешность
-* `ebony` — Темнокожая девушка
-
----
-
-## 📞 Как работают заказы по телефону (`Phone Orders`)
-
-Игрок может подойти к телефону и взять коммерческий заказ на фотографию с вознаграждением от **300 $ до 800 $**.
-
-Генератор заказов может потребовать:
-1. Девушку с определенным цветом волос (`blonde`, `brunette`, `redhead`, `asian`, `ebony`) в определенной комнате (`bathroom`, `studio` и др.).
-2. Фотографию заданной редкости (`Rarity`: `Common`, `Rare`, `Epic`, `Legendary`) в конкретной комнате.
-3. Откровенное фото (`nsfw`) конкретной девушки.
-4. Откровенное фото (`nsfw`) с определенным цветом глаз (`blue_eyes`, `green_eyes`, `brown_eyes`).
-
-Если игрок выбил ваше фото из мода, содержащее эти теги, он сможет выполнить заказ и получить крупную сумму!
+#### Ethnicity:
+* `asian` — Asian appearance
+* `ebony` — Dark-skinned girl
 
 ---
 
-## 🎨 Технические требования и рекомендации к медиафайлам
+## 📞 How Phone Orders Work (`Phone Orders`)
 
-1. **Формат изображений:**
-   * Рекомендуется: **`.webp`** — обеспечивает наилучшее сжатие при сохранении четкости и альфа-канала.
-   * Также поддерживаются: **`.png`**, **`.jpg`** / **`.jpeg`**.
-2. **Разрешение изображений:**
-   * Оптимально: `1824x1024` (Full HD).
-   * Игра имеет встроенный оптимизатор под Android: изображения больше `2048px` на мобильных устройствах автоматически масштабируются во избежание переполнения видеопамяти (VRAM OOM).
-3. **Формат видео/анимаций:**
-   * Формат: **`.ogv`** (Ogg Theora) — стандартный формат видео в Godot Engine.
-   * Видеофайлы должны находиться в папке `Animations/` или иметь расширение `.ogv`.
+The player can go to the phone and take a commercial photo order with a reward of **$300 to $800**.
+
+The order generator may request:
+1. A girl with a specific hair color (`blonde`, `brunette`, `redhead`, `asian`, `ebony`) in a specific room (`bathroom`, `studio`, etc.).
+2. A photo of a given rarity (`Rarity`: `Common`, `Rare`, `Epic`, `Legendary`) in a specific room.
+3. An explicit (`nsfw`) photo of a specific girl.
+4. An explicit (`nsfw`) photo with a specific eye color (`blue_eyes`, `green_eyes`, `brown_eyes`).
+
+If the player has obtained a photo from your mod that contains these tags, they can fulfill the order and earn a large sum!
 
 ---
 
-## 🚀 Пример полноценного элемента в `content.json`
+## 🎨 Technical Requirements and Media Recommendations
+
+1. **Image format:**
+   * Recommended: **`.webp`** — provides the best compression while preserving sharpness and the alpha channel.
+   * Also supported: **`.png`**, **`.jpg`** / **`.jpeg`**.
+2. **Image resolution:**
+   * Optimal: `1824x1024` (Full HD).
+   * The game has a built-in Android optimizer: images larger than `2048px` are automatically downscaled on mobile devices to avoid video memory overflow (VRAM OOM).
+3. **Video/animation format:**
+   * Format: **`.ogv`** (Ogg Theora) — the standard video format in Godot Engine.
+   * Video files must be located in the `Animations/` folder or have the `.ogv` extension.
+
+---
+
+## 🚀 Example of a Complete `content.json` Item
 
 ```json
 {
@@ -264,9 +264,9 @@ ExampleMod/
 }
 ```
 
-Этот кадр:
-* Сможет выпасть при клике на маркер чистки зубов в ванной.
-* Имеет синюю рамку редкости (`Rare`).
-* Продается в магазине за `80 $`.
-* Подходит под заказы по телефону на блондинку (`blonde`), голубые глаза (`blue_eyes`), откровенное фото (`nsfw`) и локацию `bathroom`.
-* Работает как в **Бесплатной**, так и в **Платной** версии игры!
+This frame:
+* Can drop when clicking the tooth-brushing marker in the bathroom.
+* Has a blue rarity frame (`Rare`).
+* Sells in the shop for `$80`.
+* Matches phone orders for a blonde (`blonde`), blue eyes (`blue_eyes`), an explicit photo (`nsfw`) and the `bathroom` location.
+* Works in both the **Free** and **Paid** versions of the game!
