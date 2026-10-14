@@ -1,0 +1,14 @@
+[
+  {
+    "Path": "Images/mod_image.jpg",
+    "Price": 50,
+    "Tags": [
+        "bathroom",
+        "brushes_his_teeth",
+        "nsfw",
+        "light_hair",
+        "brown_eyes"
+    ],
+    "Rarity": "Common"
+  }
+]
